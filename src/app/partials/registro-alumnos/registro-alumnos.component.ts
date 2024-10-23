@@ -22,6 +22,7 @@ export class RegistroAlumnosComponent implements OnInit{
   public errors:any={};
   public editar:boolean = false;
   public idUser: Number = 0;
+  public token:string = "";
 
 
   constructor(
@@ -81,6 +82,30 @@ export class RegistroAlumnosComponent implements OnInit{
     this.errors = this.alumnosService.validarAlumno(this.alumno, this.editar);
     if(!$.isEmptyObject(this.errors)){
       return false;
+    }
+
+    //Validar Password
+    if(this.alumno.password == this.alumno.confirmar_password){
+      //Registrar alumno
+      this.alumnosService.registrarAlumno(this.alumno).subscribe(
+        (response)=>{
+          //success
+          alert("Alumno registrado correctamente");
+          console.log("ALUMNO REGISTRADO: ",response);
+          if(this.token != ""){
+            this.router.navigate(['home']);
+          }else{
+            this.router.navigate(["/"]);
+          }
+        },(error)=>{
+          //Something's wrong
+          alert("No se pudo registrar al alumno");
+        }
+      );
+    }else{
+      alert("Las contraseñas no coinciden");
+      this.alumno.password="";
+      this.alumno.confirmar_password="";
     }
 
   }
