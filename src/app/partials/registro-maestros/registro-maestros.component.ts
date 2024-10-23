@@ -51,6 +51,7 @@ export class RegistroMaestrosComponent implements OnInit{
   ){}
 
   ngOnInit(): void {
+    this.maestro = this.maestrosService.esquemaMaestro();
     
   }
 
