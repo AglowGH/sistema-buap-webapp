@@ -30,6 +30,7 @@ export class RegistroAdminComponent implements OnInit{
 
   ngOnInit(): void {
     this.admin = this.administradoresService.esquemaAdmin();
+    this.admin.rol = this.rol;
   }
 
   public showPassword(){

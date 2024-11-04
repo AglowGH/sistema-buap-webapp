@@ -21,6 +21,7 @@ import { NavbarComponent } from './partials/navbar/navbar.component';
 import { RegistroAdminComponent } from './partials/registro-admin/registro-admin.component';
 import { RegistroAlumnosComponent } from './partials/registro-alumnos/registro-alumnos.component';
 import { RegistroMaestrosComponent } from './partials/registro-maestros/registro-maestros.component';
+import { HomeScreenComponent } from './screens/home-screen/home-screen.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { RegistroMaestrosComponent } from './partials/registro-maestros/registro
     NavbarComponent,
     RegistroAdminComponent,
     RegistroAlumnosComponent,
-    RegistroMaestrosComponent
+    RegistroMaestrosComponent,
+    HomeScreenComponent
   ],
   imports: [
     BrowserModule,
