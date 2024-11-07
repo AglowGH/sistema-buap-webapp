@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
+import{MatPaginatorModule} from '@angular/material/paginator';
+import {MatTableModule} from '@angular/material/table';
 import {MatDialogModule} from '@angular/material/dialog'; 
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import {MatNativeDateModule} from '@angular/material/core';
@@ -56,7 +58,9 @@ import { MaestrosScreenComponent } from './screens/maestros-screen/maestros-scre
     MatDatepickerModule,
     MatNativeDateModule,
     NgxMaskDirective,
-    MatDialogModule
+    MatDialogModule,
+    MatTableModule,
+    MatPaginatorModule
   ],
   providers: [
     provideNgxMask()
