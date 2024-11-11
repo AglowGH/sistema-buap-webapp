@@ -118,4 +118,10 @@ export class MaestrosService {
     return this.http.get<any>(`${environment.url_api}/lista-maestros/`, {headers:headers});
   }
 
+  public getMaestroByID(idUser: Number){
+    var token = this.facadeService.getSessionToken();
+    var headers = new HttpHeaders({ 'Content-Type': 'application/json' , 'Authorization': 'Bearer '+token});
+    return this.http.get<any>(`${environment.url_api}/maestros/?id=${idUser}`, {headers:headers});
+  }
+
 }

@@ -1,6 +1,8 @@
+import { Location } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AdministradoresService } from 'src/app/services/administradores.service';
+import { FacadeService } from 'src/app/services/facade.service';
 
 declare var $:any;
 
@@ -22,15 +24,27 @@ export class RegistroAdminComponent implements OnInit{
   public inputType_1:string = "";
   public inputType_2:string = "";
   public token:string = "";
+  public idUser:Number = 0;
 
   constructor(
     private administradoresService:AdministradoresService,
-    private router:Router
+    private router:Router,
+    public activatedRoute: ActivatedRoute,
+    private facadeService: FacadeService,
+    private location:Location
   ){}
 
   ngOnInit(): void {
-    this.admin = this.administradoresService.esquemaAdmin();
-    this.admin.rol = this.rol;
+    if(this.activatedRoute.snapshot.params['id'] != undefined){
+      this.editar = true;
+      //Asignamos a nuestra variable global el valor del ID que viene por la URL
+      this.idUser = this.activatedRoute.snapshot.params['id'];
+      this.admin = this.datos_user;
+    }else{
+      this.admin = this.administradoresService.esquemaAdmin();
+      this.admin.rol = this.rol;
+      this.token = this.facadeService.getSessionToken();
+    }
   }
 
   public showPassword(){
@@ -56,7 +70,7 @@ export class RegistroAdminComponent implements OnInit{
   }
 
   public regresar(){
-
+    this.location.back();
   }
 
   public registrar(){
@@ -96,6 +110,23 @@ export class RegistroAdminComponent implements OnInit{
   }
 
   public actualizar(){
+    this.errors = [];
 
+    this.errors = this.administradoresService.validarAdmin(this.admin, this.editar);
+    if(!$.isEmptyObject(this.errors)){
+      return false;
+    }
+    console.log("Pasó la validación");
+
+    this.administradoresService.editarAdmin(this.admin).subscribe(
+      (response)=>{
+        alert("Administrador editado correctamente");
+        console.log("Admin editado: ", response);
+        //Si se editó, entonces mandar al home
+        this.router.navigate(["home"]);
+      }, (error)=>{
+        alert("No se pudo editar el administrador");
+      }
+    );
   }
 }
