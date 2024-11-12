@@ -124,4 +124,10 @@ export class MaestrosService {
     return this.http.get<any>(`${environment.url_api}/maestros/?id=${idUser}`, {headers:headers});
   }
 
+  public editarMaestro (data: any): Observable <any>{
+    var token = this.facadeService.getSessionToken();
+    var headers = new HttpHeaders({ 'Content-Type': 'application/json' , 'Authorization': 'Bearer '+token});
+    return this.http.put<any>(`${environment.url_api}/maestros-edit/`, data, {headers:headers});
+  }
+
 }

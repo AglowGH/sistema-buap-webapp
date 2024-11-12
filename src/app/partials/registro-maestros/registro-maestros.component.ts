@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MaestrosService } from 'src/app/services/maestros.service';
+import { Location } from '@angular/common';
+import { FacadeService } from 'src/app/services/facade.service';
 
 
 declare var $:any;
@@ -27,6 +29,7 @@ export class RegistroMaestrosComponent implements OnInit{
   public inputType_2:string = "password";
 
   public token:string = "";
+  public idUser:Number = 0;
 
   public areas: any[] = [
     {value: '1', viewValue: 'Desarrollo Web'},
@@ -51,12 +54,24 @@ export class RegistroMaestrosComponent implements OnInit{
 
   constructor(
     private router: Router,
-    private maestrosService:MaestrosService
+    private maestrosService:MaestrosService,
+    private location:Location,
+    private facadeService: FacadeService,
+    public activatedRoute: ActivatedRoute
   ){}
 
   ngOnInit(): void {
-    this.maestro = this.maestrosService.esquemaMaestro();
-    
+    if(this.activatedRoute.snapshot.params['id'] != undefined){
+      this.editar = true;
+      //Asignamos a nuestra variable global el valor del ID que viene por la URL
+      this.idUser = this.activatedRoute.snapshot.params['id'];
+      //Al iniciar la vista asignamos los datos del user
+      this.maestro = this.datos_user;
+    }else{
+      this.maestro = this.maestrosService.esquemaMaestro();
+      this.maestro.rol = this.rol;
+      this.token = this.facadeService.getSessionToken();
+    }
   }
 
   public showPassword(){
@@ -81,9 +96,31 @@ export class RegistroMaestrosComponent implements OnInit{
     }
   }
 
-  public regresar(){}
+  public regresar(){
+    this.location.back();
+  }
 
-  public actualizar(){}
+  public actualizar(){
+    //Validación
+    this.errors = [];
+
+    this.errors = this.maestrosService.validarMaestro(this.maestro, this.editar);
+    if(!$.isEmptyObject(this.errors)){
+      return false;
+    }
+    console.log("Pasó la validación");
+
+    this.maestrosService.editarMaestro(this.maestro).subscribe(
+      (response)=>{
+        alert("Maestro editado correctamente");
+        console.log("Maestro editado: ", response);
+        //Si se editó, entonces mandar al home
+        this.router.navigate(["home"]);
+      }, (error)=>{
+        alert("No se pudo editar el maestro");
+      }
+    );
+  }
 
   public registrar(){
     this.errors = [];
@@ -133,7 +170,16 @@ export class RegistroMaestrosComponent implements OnInit{
   }
 
   public revisarSeleccion(nombre: string){
-    return false;
+    if(this.maestro.materias_json){
+      var busqueda = this.maestro.materias_json.find((element)=>element==nombre);
+      if(busqueda != undefined){
+        return true;
+      }else{
+        return false;
+      }
+    }else{
+      return false;
+    }
   }
 
   public changeFecha(event :any){
