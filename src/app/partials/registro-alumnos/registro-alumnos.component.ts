@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlumnosService } from 'src/app/services/alumnos.service';
+import { Location } from '@angular/common';
+import { FacadeService } from 'src/app/services/facade.service';
 
 declare var $:any;
 
@@ -28,17 +30,27 @@ export class RegistroAlumnosComponent implements OnInit{
   constructor(
     //private location : Location,
     private router: Router,
-    //public activatedRoute: ActivatedRoute,
-    private alumnosService: AlumnosService
+    public activatedRoute: ActivatedRoute,
+    private alumnosService: AlumnosService,
+    private facadeService: FacadeService,
+    private location:Location
   ){}
 
   ngOnInit(): void {
-    this.alumno = this.alumnosService.esquemaAlumno();
-    this.alumno.rol = this.rol;
+    if(this.activatedRoute.snapshot.params['id'] != undefined){
+      this.editar = true;
+      //Asignamos a nuestra variable global el valor del ID que viene por la URL
+      this.idUser = this.activatedRoute.snapshot.params['id'];
+      this.alumno = this.datos_user;
+    }else{
+      this.alumno = this.alumnosService.esquemaAlumno();
+      this.alumno.rol = this.rol;
+      this.token = this.facadeService.getSessionToken();
+    }
   }
 
   public regresar(){
-    
+    this.location.back();
   }
 
   //Funciones para password
@@ -111,6 +123,22 @@ export class RegistroAlumnosComponent implements OnInit{
   }
 
   public actualizar(){
+    this.errors = this.alumnosService.validarAlumno(this.alumno,this.editar);
+
+    if(!$.isEmptyObject(this.errors)){
+      return false;
+    }
+    console.log("Pasó la validación");
+
+    this.alumnosService.editarAlumno(this.alumno).subscribe(
+      (response)=>{
+        alert("Administrador editado correctamente");
+        this.router.navigate(["home"]);
+      },(error)=>{
+        alert("No se pudo editar al alumno");
+      }
+    );
+
 
   }
 
