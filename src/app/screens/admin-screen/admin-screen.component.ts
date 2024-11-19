@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { EliminarUsuarioModalComponent } from 'src/app/modals/eliminar-usuario-modal/eliminar-usuario-modal.component';
 import { AdministradoresService } from 'src/app/services/administradores.service';
 import { FacadeService } from 'src/app/services/facade.service';
 
@@ -43,22 +44,22 @@ export class AdminScreenComponent implements OnInit{
   }
 
   public delete(idUser: number){
-    //const dialogRef = this.dialog.open(EliminarUserModalComponent,{
-    //  data: {id: idUser, rol: 'administrador'}, //Se pasan valores a través del componente
-    //  height: '288px',
-    //  width: '328px',
-    //});
-//
-    //dialogRef.afterClosed().subscribe(result => {
-    //  if(result.isDelete){
-    //    console.log("Admin eliminado");
-    //    //Recargar página
-    //    window.location.reload();
-    //  }else{
-    //    alert("Administrador no eliminado ");
-    //    console.log("No se eliminó el admin");
-    //  }
-    //});
+    const dialogRef = this.dialog.open(EliminarUsuarioModalComponent,{
+      data: {id: idUser, rol: 'administrador'}, //Se pasan valores a través del componente
+      height: '288px',
+      width: '328px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result.isDelete){
+        console.log("Admin eliminado");
+        //Recargar página
+        window.location.reload();
+      }else{
+        alert("Administrador no eliminado ");
+        console.log("No se eliminó el admin");
+      }
+    });
 
   }
 

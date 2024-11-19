@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { EliminarUsuarioModalComponent } from 'src/app/modals/eliminar-usuario-modal/eliminar-usuario-modal.component';
 import { AlumnosService } from 'src/app/services/alumnos.service';
 import { FacadeService } from 'src/app/services/facade.service';
 
@@ -98,21 +99,21 @@ export class AlumnosScreenComponent implements OnInit{
   }
 
   public delete(idUser: number){
-    //const dialogRef = this.dialog.open(EliminarUserModalComponent,{
-    //  data: {id: idUser, rol: 'alumno'}, //Se pasan valores a través del componente
-    //  height: '288px',
-    //  width: '328px',
-    //});
-    //dialogRef.afterClosed().subscribe(result => {
-    //  if(result.isDelete){
-    //    console.log("Alumno eliminado");
-    //    //Recargar página
-    //    window.location.reload();
-    //  }else{
-    //    alert("Alumno no eliminado ");
-    //    console.log("No se eliminó el alumno");
-    //  }
-    //});
+    const dialogRef = this.dialog.open(EliminarUsuarioModalComponent,{
+      data: {id: idUser, rol: 'alumno'}, //Se pasan valores a través del componente
+      height: '288px',
+      width: '328px',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result.isDelete){
+        console.log("Alumno eliminado");
+        //Recargar página
+        window.location.reload();
+      }else{
+        alert("Alumno no eliminado ");
+        console.log("No se eliminó el alumno");
+      }
+    });
   }
 
 
