@@ -18,7 +18,10 @@
                               <a class="nav-link" id="maestro" (click)="clickNavLink('maestros')">Maestros</a>
                             </li>
                             <li class="nav-item">
-                              <a class="nav-link">Lista de materias</a>
+                              <a class="nav-link" (click)="clickNavLink('lista-materias')">Lista de materias</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" (click)="clickNavLink('registro-materias')">Registro de materias</a>
                             </li>
                             <li class="nav-item" *ngIf="rol=='Administrador'">
                               <a class="nav-link" id="graficas" (click)="clickNavLink('graficas')">Gráficas</a>
