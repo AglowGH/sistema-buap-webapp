@@ -132,7 +132,7 @@ export class RegistroAlumnosComponent implements OnInit{
 
     this.alumnosService.editarAlumno(this.alumno).subscribe(
       (response)=>{
-        alert("Administrador editado correctamente");
+        alert("Alumno editado correctamente");
         this.router.navigate(["home"]);
       },(error)=>{
         alert("No se pudo editar al alumno");
