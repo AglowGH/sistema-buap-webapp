@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
+import { MateriasService } from 'src/app/services/materias.service';
 
 @Component({
   selector: 'app-registro-materias-screen',
@@ -10,8 +11,12 @@ export class RegistroMateriasScreenComponent implements OnInit{
 
   @Input() datos_materia:any = {};
   public editar:boolean = false;
+  public hora_inicio:any = { hour: 13, minute: 30 };
+  public hora_fin:any = { hour: 13, minute: 30 };
 
-  public materia:any = {};
+  public materia:any = {
+    dias:[]
+  };
   public errors:any = {};
   
   public carreras:any = [
@@ -40,7 +45,8 @@ export class RegistroMateriasScreenComponent implements OnInit{
   }
 
   constructor(
-    private location:Location
+    private location:Location,
+    private materiasService:MateriasService
   ){}
 
   public checkboxChange(event:any){

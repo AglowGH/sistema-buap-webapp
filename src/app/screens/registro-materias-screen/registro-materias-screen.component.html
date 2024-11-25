@@ -19,8 +19,8 @@
         <div *ngIf="errors.first_name" class="invalid-feedback">{{ errors.first_name }}</div>
 
         <mat-form-field class="mat-input" appearance="outline">
-            <mat-label>Seccion</mat-label>
-            <input matInput [(ngModel)]="materia.seccion" placeholder="Escribe seccion" mask="000">
+          <mat-label>Seccion</mat-label>
+          <input matInput [(ngModel)]="materia.seccion" placeholder="Escribe seccion" mask="000">
         </mat-form-field>
         <div *ngIf="errors.last_name" class="invalid-feedback">{{ errors.last_name }}</div>
 
@@ -66,6 +66,16 @@
             <mat-hint align="end">{{materia.creditos?.length || 0}}/2</mat-hint>
         </mat-form-field>
         <div *ngIf="errors.rfc" class="invalid-feedback">{{ errors.rfc }}</div>
+
+        <div class="hora">
+          <label for="timePicker">Seleccione la hora inicio:</label>
+          <ngb-timepicker [(ngModel)]="hora_inicio" [spinners]="true"></ngb-timepicker>
+        </div>
+
+        <div class="hora">
+          <label for="timePicker">Seleccione la hora de finalizacion:</label>
+          <ngb-timepicker [(ngModel)]="hora_fin" [spinners]="true"></ngb-timepicker>
+        </div>
 
 
         <div class="select-materias">

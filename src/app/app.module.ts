@@ -33,6 +33,7 @@ import { GraficasScreenComponent } from './screens/graficas-screen/graficas-scre
 import { NgChartsModule } from 'ng2-charts';
 import { RegistroMateriasScreenComponent } from './screens/registro-materias-screen/registro-materias-screen.component';
 import { ListaMateriasScreenComponent } from './screens/lista-materias-screen/lista-materias-screen.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { ListaMateriasScreenComponent } from './screens/lista-materias-screen/li
     MatDialogModule,
     MatTableModule,
     MatPaginatorModule,
-    NgChartsModule
+    NgChartsModule,
+    NgbModule
   ],
   providers: [
     provideNgxMask()
