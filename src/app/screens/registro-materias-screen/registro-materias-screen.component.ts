@@ -13,6 +13,7 @@ export class RegistroMateriasScreenComponent implements OnInit{
   public editar:boolean = false;
   public hora_inicio:any = { hour: 13, minute: 30 };
   public hora_fin:any = { hour: 13, minute: 30 };
+  public tipo:string = "";
 
   public materia:any = {
     dias:[]

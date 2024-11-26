@@ -62,19 +62,44 @@ export class NavbarComponent implements OnInit{
       $("#principal").removeClass("active");
       $("#maestro").removeClass("active");
       $("#alumno").addClass("active");
+      $("#graficas").removeClass("active");
+      $("#lista-materias").removeClass("active");
+      $("#registro-materias").removeClass("active");
     }else if(link == "maestros"){
       $("#principal").removeClass("active");
       $("#alumno").removeClass("active");
       $("#maestro").addClass("active");
+      $("#graficas").removeClass("active");
+      $("#lista-materias").removeClass("active");
+      $("#registro-materias").removeClass("active");
     }else if(link == "home"){
       $("#alumno").removeClass("active");
       $("#maestro").removeClass("active");
       $("#principal").addClass("active");
+      $("#graficas").removeClass("active");
+      $("#lista-materias").removeClass("active");
+      $("#registro-materias").removeClass("active");
     }else if(link == "graficas"){
       $("#alumno").removeClass("active");
       $("#maestro").removeClass("active");
       $("#principal").removeClass("active");
       $("#graficas").addClass("active");
+      $("#graficas").removeClass("active");
+      $("#lista-materias").removeClass("active");
+      $("#registro-materias").removeClass("active");
+    }else if(link == "registro-materias"){
+      $("#alumno").removeClass("active");
+      $("#maestro").removeClass("active");
+      $("#principal").removeClass("active");
+      $("#graficas").removeClass("active");
+      $("#registro-materias").addClass("active");
+    }else if(link == "lista-materias"){
+      $("#alumno").removeClass("active");
+      $("#maestro").removeClass("active");
+      $("#principal").removeClass("active");
+      $("#graficas").removeClass("active");
+      $("#lista-materias").addClass("active");
+      $("#registro-materias").removeClass("active");
     }
   }
 
