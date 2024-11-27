@@ -75,4 +75,8 @@ export class ValidatorService {
     console.log(pat.test(input), input);
     return pat.test(input);
   }
+
+  validHours(data:any){
+    return (data['hora_fin']['hour']>data['hora_inicio']['hour']);
+  }
 }

@@ -14,25 +14,25 @@
             <mat-label>NRC: </mat-label>
             <input matInput [(ngModel)]="materia.nrc" mask="000000" name="nrc" placeholder="Escribe nrc de la materia" [disabled]="editar">
           </mat-form-field>
-        <div *ngIf="errors.id_trabajador" class="invalid-feedback">{{ errors.id_trabajador }}</div>
+        <div *ngIf="errors.nrc" class="invalid-feedback">{{ errors.nrc }}</div>
 
         <mat-form-field class="mat-input" appearance="outline">
             <mat-label>Nombre de materia:</mat-label>
             <input matInput [(ngModel)]="materia.nombre" placeholder="Escribe nombre" (keypress)="soloLetras($event)">
         </mat-form-field>
-        <div *ngIf="errors.first_name" class="invalid-feedback">{{ errors.first_name }}</div>
+        <div *ngIf="errors.nombre" class="invalid-feedback">{{ errors.nombre }}</div>
 
         <mat-form-field class="mat-input" appearance="outline">
           <mat-label>Seccion</mat-label>
           <input matInput [(ngModel)]="materia.seccion" placeholder="Escribe seccion" mask="000">
         </mat-form-field>
-        <div *ngIf="errors.last_name" class="invalid-feedback">{{ errors.last_name }}</div>
+        <div *ngIf="errors.seccion" class="invalid-feedback">{{ errors.seccion }}</div>
 
         <mat-form-field class="mat-input" appearance="outline">
           <mat-label>Salon</mat-label>
           <input matInput [(ngModel)]="materia.salon" placeholder="Escribe salon" (keypress)="soloLetrasYNumeros($event)">
         </mat-form-field>
-        <div *ngIf="errors.telefono" class="invalid-feedback">{{ errors.telefono }}</div>
+        <div *ngIf="errors.salon" class="invalid-feedback">{{ errors.salon }}</div>
 
         <mat-form-field class="mat-input" appearance="outline">
             <mat-label>Programa educativo</mat-label>
@@ -42,7 +42,7 @@
               </mat-option>
             </mat-select>
         </mat-form-field>
-        <div *ngIf="errors.area_investigacion" class="invalid-feedback">{{ errors.area_investigacion }}</div>
+        <div *ngIf="errors.programa_educativo" class="invalid-feedback">{{ errors.programa_educativo }}</div>
 
         <mat-form-field class="mat-input" appearance="outline">
             <mat-label>Profesor asignado</mat-label>
@@ -52,25 +52,25 @@
               </mat-option>
             </mat-select>
         </mat-form-field>
-        <div *ngIf="errors.area_investigacion" class="invalid-feedback">{{ errors.area_investigacion }}</div>
+        <div *ngIf="errors.profesor_asignado " class="invalid-feedback">{{ errors.profesor_asignado }}</div>
 
         <mat-form-field class="mat-input" appearance="outline">
             <mat-label>Créditos de la materia</mat-label>
             <input matInput minlength="1" maxlength="2" matInput [(ngModel)]="materia.creditos" placeholder="Escribe creditos" style="text-transform: uppercase;" mask="00">
             <mat-hint align="end">{{materia.creditos?.length || 0}}/2</mat-hint>
         </mat-form-field>
-        <div *ngIf="errors.rfc" class="invalid-feedback">{{ errors.rfc }}</div>
+        <div *ngIf="errors.creditos" class="invalid-feedback">{{ errors.creditos }}</div>
 
         <div class="hora">
           <label for="timePicker">Seleccione la hora inicio:</label>
           <ngb-timepicker [(ngModel)]="hora_inicio" [spinners]="true"></ngb-timepicker>
         </div>
+        <div *ngIf="errors.hora_inicio" class="invalid-feedback">{{ errors.hora_inicio }}</div>
 
         <div class="hora">
           <label for="timePicker">Seleccione la hora de finalizacion:</label>
           <ngb-timepicker [(ngModel)]="hora_fin" [spinners]="true"></ngb-timepicker>
         </div>
-
 
         <div class="select-materias">
           <div class="row mt-3 mb-3">
@@ -84,6 +84,7 @@
             </mat-checkbox>
           </div>
         </div>
+        <div *ngIf="errors.dias" class="invalid-feedback">{{ errors.dias }}</div>
 
         <div class="section-buttons">
             <button class="btn btn-danger" (click)="regresar()">Cancelar</button>

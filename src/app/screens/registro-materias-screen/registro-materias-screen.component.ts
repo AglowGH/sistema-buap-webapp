@@ -1,6 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { MateriasService } from 'src/app/services/materias.service';
+import { Router } from '@angular/router';
+import { FacadeService } from 'src/app/services/facade.service';
+
+declare var $:any;
 
 @Component({
   selector: 'app-registro-materias-screen',
@@ -9,11 +13,14 @@ import { MateriasService } from 'src/app/services/materias.service';
 })
 export class RegistroMateriasScreenComponent implements OnInit{
 
+  @Input() rol:string = "";
   @Input() datos_materia:any = {};
   public editar:boolean = false;
   public hora_inicio:any = { hour: 13, minute: 30 };
   public hora_fin:any = { hour: 13, minute: 30 };
   public tipo:string = "";
+  public error:any=[];
+  public token:string = "";
 
   public materia:any = {
     dias:[]
@@ -37,16 +44,19 @@ export class RegistroMateriasScreenComponent implements OnInit{
     {value: '3', viewValue: 'Miercoles'},
     {value: '4', viewValue: 'Jueves'},
     {value: '5', viewValue: 'Viernes'},
-    {value: '6', viewValue: 'Sabado'},
-    {value: '7', viewValue: 'Domingo'},
+    {value: '6', viewValue: 'Sabado'}
   ];
 
   ngOnInit(): void {
-    
+    this.rol = this.facadeService.getUserGroup();
+    this.materia.rol = this.rol;
+    this.token = this.facadeService.getSessionToken();
   }
 
   constructor(
+    private router: Router,
     private location:Location,
+    private facadeService: FacadeService,
     private materiasService:MateriasService
   ){}
 
@@ -85,7 +95,25 @@ export class RegistroMateriasScreenComponent implements OnInit{
 
   public actualizar(){}
 
-  public registrar(){}
+  public registrar(){
+    this.materia['hora_inicio'] = this.hora_inicio;
+    this.materia['hora_fin'] = this.hora_fin;
+    this.errors = this.materiasService.validarMateria(this.materia);
+    if(!$.isEmptyObject(this.errors)){
+      return false;
+    }
+    this.materiasService.registrarMateria(this.materia).subscribe(
+      (response)=>{
+        alert("Matera registrado de manera correcta");
+        this.router.navigate(['home']);
+      },(error)=>{
+        alert("No se pudo registrar la materia");
+        console.log(error);
+      }
+    );
+    console.log(this.materia);
+
+  }
 
   public soloLetras(event: KeyboardEvent) {
     const charCode = event.key.charCodeAt(0);
