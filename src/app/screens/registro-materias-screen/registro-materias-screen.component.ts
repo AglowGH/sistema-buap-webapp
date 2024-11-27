@@ -96,8 +96,10 @@ export class RegistroMateriasScreenComponent implements OnInit{
   public actualizar(){}
 
   public registrar(){
-    this.materia['hora_inicio'] = this.hora_inicio;
-    this.materia['hora_fin'] = this.hora_fin;
+    this.materia['hora_inicio'] = this.hora_inicio.hour;
+    this.materia['hora_fin'] = this.hora_fin.hour;
+    this.materia['minuto_inicio'] = this.hora_inicio.minute;
+    this.materia['minuto_fin'] = this.hora_inicio.minute;
     this.errors = this.materiasService.validarMateria(this.materia);
     if(!$.isEmptyObject(this.errors)){
       return false;
@@ -105,6 +107,7 @@ export class RegistroMateriasScreenComponent implements OnInit{
     this.materiasService.registrarMateria(this.materia).subscribe(
       (response)=>{
         alert("Matera registrado de manera correcta");
+        console.log(response);
         this.router.navigate(['home']);
       },(error)=>{
         alert("No se pudo registrar la materia");

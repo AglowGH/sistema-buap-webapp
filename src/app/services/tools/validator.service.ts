@@ -77,6 +77,6 @@ export class ValidatorService {
   }
 
   validHours(data:any){
-    return (data['hora_fin']['hour']>data['hora_inicio']['hour']);
+    return (data['hora_fin']>data['hora_inicio']);
   }
 }
