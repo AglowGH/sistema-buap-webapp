@@ -87,4 +87,16 @@ export class MateriasService {
     var headers = new HttpHeaders({ 'Content-Type': 'application/json' , 'Authorization': 'Bearer '+token});
     return this.http.delete<any>(`${environment.url_api}/materias-edit/?nrc=${nrc}`,{headers:headers});
   }
+
+  public obtenerMateria(nrc:any):Observable<any>{
+    var token = this.facadeService.getSessionToken();
+    var headers = new HttpHeaders({ 'Content-Type': 'application/json' , 'Authorization': 'Bearer '+token});
+    return this.http.get<any>(`${environment.url_api}/materias/?nrc=${nrc}`,{headers:headers});
+  }
+
+  public actualizarMateria(data:any):Observable<any>{
+    var token = this.facadeService.getSessionToken();
+    var headers = new HttpHeaders({ 'Content-Type': 'application/json' , 'Authorization': 'Bearer '+token});
+    return this.http.put<any>(`${environment.url_api}/materias-edit/`,data,{headers:headers});
+  }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { EliminarMateriaModalComponent } from 'src/app/modals/eliminar-materia-modal/eliminar-materia-modal.component';
 import { FacadeService } from 'src/app/services/facade.service';
 import { MateriasService } from 'src/app/services/materias.service';
@@ -29,6 +30,7 @@ export class ListaMateriasScreenComponent implements OnInit{
   constructor(
     public facadeService: FacadeService,
     public materiasService:MateriasService,
+    private router: Router,
     public dialog: MatDialog
   ){}
 
@@ -50,7 +52,9 @@ export class ListaMateriasScreenComponent implements OnInit{
     );
   }
 
-  public goEditar(nrc:any){}
+  public goEditar(nrc:any){
+    this.router.navigate([`registro-materias/${nrc}`]);
+  }
 
   public delete(nrc:any){
     const dialogRef = this.dialog.open(

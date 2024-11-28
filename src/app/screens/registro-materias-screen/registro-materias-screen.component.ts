@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { MateriasService } from 'src/app/services/materias.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FacadeService } from 'src/app/services/facade.service';
+import { RepositionScrollStrategy } from '@angular/cdk/overlay';
 
 declare var $:any;
 
@@ -51,9 +52,34 @@ export class RegistroMateriasScreenComponent implements OnInit{
     this.rol = this.facadeService.getUserGroup();
     this.materia.rol = this.rol;
     this.token = this.facadeService.getSessionToken();
+    if(this.activatedRoute.snapshot.params['nrc'] != undefined){
+      this.editar=true;
+      this.materia['nrc'] = this.activatedRoute.snapshot.params['nrc'];
+      this.obtenerMateria(this.materia['nrc']);
+    }
+  }
+
+  public obtenerMateria(nrc:any){
+    this.materiasService.obtenerMateria(nrc).subscribe(
+      (response)=>{
+        this.materia['nombre'] = response['nombre'];
+        this.materia['seccion'] = response['seccion'];
+        this.materia['salon'] = response['salon'];
+        this.materia['programa_educativo'] = response['programa_educativo'];
+        this.materia['profesor_asignado'] = response['profesor_asignado'];
+        this.materia['creditos'] = response['creditos'];
+        this.hora_inicio = {hour:response['hora_inicio'],minute:response['minuto_inicio']}
+        this.hora_fin = {hour:response['hora_fin'],minute:response['minuto_fin']}
+        this.materia.dias = response['dias'];
+      },(error)=>{
+        console.log(error);
+        alert("No se puedo recuperar la informacion de la materia.")
+      }
+    );
   }
 
   constructor(
+    public activatedRoute: ActivatedRoute,
     private router: Router,
     private location:Location,
     private facadeService: FacadeService,
@@ -93,7 +119,26 @@ export class RegistroMateriasScreenComponent implements OnInit{
     this.location.back();
   }
 
-  public actualizar(){}
+  public actualizar(){
+    this.materia['hora_inicio'] = this.hora_inicio.hour;
+    this.materia['hora_fin'] = this.hora_fin.hour;
+    this.materia['minuto_inicio'] = this.hora_inicio.minute;
+    this.materia['minuto_fin'] = this.hora_inicio.minute;
+    this.errors = this.materiasService.validarMateria(this.materia);
+    if(!$.isEmptyObject(this.errors)){
+      return false;
+    }
+    this.materiasService.actualizarMateria(this.materia).subscribe(
+      (response)=>{
+        alert("Materia actualizada de manera correcta");
+        console.log(response);
+        this.router.navigate(['home']);
+      },(error)=>{
+        alert("No se pudo actualizar la materia");
+        console.log(error);
+      }
+    );
+  }
 
   public registrar(){
     this.materia['hora_inicio'] = this.hora_inicio.hour;
@@ -106,7 +151,7 @@ export class RegistroMateriasScreenComponent implements OnInit{
     }
     this.materiasService.registrarMateria(this.materia).subscribe(
       (response)=>{
-        alert("Matera registrado de manera correcta");
+        alert("Materia registrado de manera correcta");
         console.log(response);
         this.router.navigate(['home']);
       },(error)=>{
