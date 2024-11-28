@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { EliminarMateriaModalComponent } from 'src/app/modals/eliminar-materia-modal/eliminar-materia-modal.component';
 import { FacadeService } from 'src/app/services/facade.service';
 import { MateriasService } from 'src/app/services/materias.service';
 
@@ -26,7 +28,8 @@ export class ListaMateriasScreenComponent implements OnInit{
 
   constructor(
     public facadeService: FacadeService,
-    public materiasService:MateriasService
+    public materiasService:MateriasService,
+    public dialog: MatDialog
   ){}
 
   ngOnInit(): void {
@@ -49,7 +52,25 @@ export class ListaMateriasScreenComponent implements OnInit{
 
   public goEditar(nrc:any){}
 
-  public delete(nrc:any){}
+  public delete(nrc:any){
+    const dialogRef = this.dialog.open(
+      EliminarMateriaModalComponent,
+      {data:{nrc:nrc},
+      height: '288px',
+      width: '328px'}
+    );
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result.isDelete){
+        console.log("Materia eliminada");
+        window.location.reload();
+      }else{
+        alert("Materia no eliminada ");
+        console.log("No se eliminó la materia");
+      }
+    });
+
+  }
 
 }
 

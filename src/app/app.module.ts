@@ -34,6 +34,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { RegistroMateriasScreenComponent } from './screens/registro-materias-screen/registro-materias-screen.component';
 import { ListaMateriasScreenComponent } from './screens/lista-materias-screen/lista-materias-screen.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { EliminarMateriaModalComponent } from './modals/eliminar-materia-modal/eliminar-materia-modal.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     EliminarUsuarioModalComponent,
     GraficasScreenComponent,
     RegistroMateriasScreenComponent,
-    ListaMateriasScreenComponent
+    ListaMateriasScreenComponent,
+    EliminarMateriaModalComponent
   ],
   imports: [
     BrowserModule,
