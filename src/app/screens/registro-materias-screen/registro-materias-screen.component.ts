@@ -4,6 +4,7 @@ import { MateriasService } from 'src/app/services/materias.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FacadeService } from 'src/app/services/facade.service';
 import { RepositionScrollStrategy } from '@angular/cdk/overlay';
+import { MaestrosService } from 'src/app/services/maestros.service';
 
 declare var $:any;
 
@@ -34,10 +35,7 @@ export class RegistroMateriasScreenComponent implements OnInit{
     {value: '3', viewValue: 'Ingeniería en Tecnologías de la Información'}
   ];
 
-  public profesores:any = [
-    {value: '1', viewValue: 'Profesor Jirafales'},
-    {value: '2', viewValue: 'Doctor Chapatin'}
-  ];
+  public profesores:any = [];
 
   public dias:any = [
     {value: '1', viewValue: 'Lunes'},
@@ -52,11 +50,27 @@ export class RegistroMateriasScreenComponent implements OnInit{
     this.rol = this.facadeService.getUserGroup();
     this.materia.rol = this.rol;
     this.token = this.facadeService.getSessionToken();
+    this.obtenerMaestros();
     if(this.activatedRoute.snapshot.params['nrc'] != undefined){
       this.editar=true;
       this.materia['nrc'] = this.activatedRoute.snapshot.params['nrc'];
       this.obtenerMateria(this.materia['nrc']);
     }
+  }
+
+  public obtenerMaestros(){
+    this.maestrosService.obtenerListaMaestros().subscribe(
+      (response)=>{
+        let profesores:any = [];
+        let i:number = 1;
+        response.forEach((profesor)=>{
+          profesores.push({value: `${i++}` , viewValue: `${profesor.user.first_name} ${profesor.user.last_name}`});
+        });
+        this.profesores=profesores;
+      },(error)=>{
+        console.log("La lista de profesores no se pudo recuperar.");
+      }
+    );
   }
 
   public obtenerMateria(nrc:any){
@@ -83,7 +97,8 @@ export class RegistroMateriasScreenComponent implements OnInit{
     private router: Router,
     private location:Location,
     private facadeService: FacadeService,
-    private materiasService:MateriasService
+    private materiasService:MateriasService,
+    private maestrosService:MaestrosService
   ){}
 
   public checkboxChange(event:any){
