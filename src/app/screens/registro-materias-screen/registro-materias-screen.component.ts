@@ -64,7 +64,7 @@ export class RegistroMateriasScreenComponent implements OnInit{
         let profesores:any = [];
         let i:number = 1;
         response.forEach((profesor)=>{
-          profesores.push({value: `${i++}` , viewValue: `${profesor.user.first_name} ${profesor.user.last_name}`});
+          profesores.push({value: `${i++}` , viewValue: `${profesor.user.first_name} ${profesor.user.last_name}`, id:profesor.id});
         });
         this.profesores=profesores;
       },(error)=>{

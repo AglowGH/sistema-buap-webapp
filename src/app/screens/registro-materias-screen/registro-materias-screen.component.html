@@ -47,7 +47,7 @@
         <mat-form-field class="mat-input" appearance="outline">
             <mat-label>Profesor asignado</mat-label>
             <mat-select [(ngModel)]="materia.profesor_asignado">
-              <mat-option *ngFor="let profesor of profesores" [value]="profesor.viewValue">
+              <mat-option *ngFor="let profesor of profesores" [value]="profesor.id">
                 {{profesor.viewValue}}
               </mat-option>
             </mat-select>
